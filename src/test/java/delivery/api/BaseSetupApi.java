@@ -19,11 +19,16 @@ public class BaseSetupApi {
     @BeforeAll
     public static void setUp() throws ConfigurationException {
 
+        // read config file
         configuration = new PropertiesConfiguration();
         configuration.load(PATH_TO_CONFIG);
+
+        // get data from config
         RestAssured.baseURI = configuration.getString("base-url");
         String u = configuration.getString("username");
         String p = configuration.getString("password");
+
+        // auth
         bearerToken = ApiClient.authorizeAndGetToken(u, p);
     }
 

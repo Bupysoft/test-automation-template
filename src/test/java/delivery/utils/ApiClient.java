@@ -23,14 +23,28 @@ public class ApiClient extends BaseSetupApi {
                 .extract()
                 .response();
     }
+    public static Response createOrder(RequestSpecification spec){
+
+        return given()
+                .spec(spec)
+                .log()
+                .all()
+                .get( "orders")
+                .then()
+                .log()
+                .all()
+                .extract()
+                .response();
+    }
 
     public static String authorizeAndGetToken(String username, String password){
 
-        return given()
+        LoginDto loginDto=new LoginDto(username,password);
+        String token = given()
                 .log()
                 .all()
                 .contentType(ContentType.JSON)
-                .body( new Gson().toJson( new LoginDto(username,password) ) )
+                .body( new Gson().toJson( loginDto ) )
                 .post("login/student" )
                 .then()
                 .log()
@@ -38,6 +52,8 @@ public class ApiClient extends BaseSetupApi {
                 .extract()
                 .response()
                 .asString();
+
+        return token;
     }
 
 }
