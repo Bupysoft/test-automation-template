@@ -3,6 +3,7 @@ package delivery.utils;
 import com.google.gson.Gson;
 import delivery.api.BaseSetupApi;
 import delivery.dto.LoginDto;
+import delivery.dto.OrderDto;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -23,13 +24,14 @@ public class ApiClient extends BaseSetupApi {
                 .extract()
                 .response();
     }
-    public static Response createOrder(RequestSpecification spec){
+    public static Response createOrder(RequestSpecification spec, OrderDto orderDto){
 
         return given()
                 .spec(spec)
                 .log()
                 .all()
-                .get( "orders")
+                .body(orderDto)
+                .post( "orders")
                 .then()
                 .log()
                 .all()
