@@ -21,6 +21,15 @@ public class OrderDto {
         this.comment = comment;
         this.id = id;
     }
+    public static OrderDto createRandomOrder() {
+        String randomStatus = RandomDataGenerator.generateRandomString(10); // Генерация случайного статуса
+        int randomCourierId = RandomDataGenerator.generateRandomNumber(1, 100); // Генерация случайного courierId
+        String randomCustomerName = RandomDataGenerator.generateRandomString(10); // Генерация случайного имени клиента
+        String randomCustomerPhone = RandomDataGenerator.generateRandomPhoneNumber(); // Генерация случайного номера телефона клиента
+        String randomComment = RandomDataGenerator.generateRandomString(20); // Генерация случайного комментария
+        long randomId = RandomDataGenerator.generateRandomNumber(1000, 9999); // Генерация случайного id
+        return new OrderDto(randomStatus, randomCourierId, randomCustomerName, randomCustomerPhone, randomComment, randomId);
+    }
 
     public void setStatus(String status) {
         this.status = status;

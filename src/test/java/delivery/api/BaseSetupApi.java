@@ -31,7 +31,7 @@ public class BaseSetupApi {
         String password= System.getProperty("password");
 
         // auth
-        bearerToken = ApiClient.authorizeAndGetToken(u, p);
+        bearerToken = ApiClient.authorizeAndGetToken(username, password);
     }
 
     public RequestSpecification getAuthenticatedRequestSpecification(){
