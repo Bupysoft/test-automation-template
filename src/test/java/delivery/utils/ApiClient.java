@@ -58,4 +58,19 @@ public class ApiClient extends BaseSetupApi {
         return token;
     }
 
+    public static Response deleteOrderById(RequestSpecification spec, int orderId){
+
+        return given()
+                .spec(spec)
+                .log()
+                .all()
+                .contentType(ContentType.JSON)
+                .delete( "orders/" + orderId)
+                .then()
+                .log()
+                .all()
+                .extract()
+                .response();
+    }
+
 }

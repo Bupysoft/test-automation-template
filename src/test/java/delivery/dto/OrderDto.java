@@ -27,7 +27,7 @@ public class OrderDto {
         String randomCustomerName = RandomDataGenerator.generateRandomString(10); // Генерация случайного имени клиента
         String randomCustomerPhone = RandomDataGenerator.generateRandomPhoneNumber(); // Генерация случайного номера телефона клиента
         String randomComment = RandomDataGenerator.generateRandomString(20); // Генерация случайного комментария
-        long randomId = RandomDataGenerator.generateRandomNumber(1000, 9999); // Генерация случайного id
+        int randomId = RandomDataGenerator.generateRandomNumber(1000, 9999); // Генерация случайного id
         return new OrderDto(randomStatus, randomCourierId, randomCustomerName, randomCustomerPhone, randomComment, randomId);
     }
 
