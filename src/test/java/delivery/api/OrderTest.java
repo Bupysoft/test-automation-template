@@ -32,4 +32,10 @@ public class OrderTest extends BaseSetupApi {
                 () -> Assertions.assertNull(response.getBody().path("courierID"), "Courier ID is null")
         );
     }
+    @Test
+            void deleteOrderById() {
+        Response responseOrderCreation = ApiClient.createRandomOrder(getAuthenticatedRequestSpecification());
+        int orderId = response.getBody().path("id");
+        Response responseOrderDeletion = ApiClient.deleteOrderById(getAuthenticatedRequestSpecification(), orderId);
+    }
 }
