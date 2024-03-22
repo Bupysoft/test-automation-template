@@ -7,35 +7,41 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import delivery.utils.ApiClient;
 
+import static delivery.utils.ApiClient.createOrder;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class OrderTest extends BaseSetupApi {
 
     @Test
     void getOrderInformationAndCheckResponse() {
-
-        Response response = ApiClient.getOrders(getAuthenticatedRequestSpecification() );
-
-        Assertions.assertAll("Test description",
-                () -> Assertions.assertEquals(HttpStatus.SC_OK, response.getStatusCode(), "Status code is OK")
-        );
-
-    }
-    @Test
-    void createOrderAndCheckResponse() {
-        // Создание заказа
-        OrderDto orderDto = OrderDto.createRandomOrder();
         Response response = ApiClient.getOrders(getAuthenticatedRequestSpecification());
 
-        // Проверка статуса ответа и наличия id и отсутствия courierID
-        Assertions.assertAll("Check order response",
+        Assertions.assertEquals(HttpStatus.SC_OK, response.getStatusCode(), "Status code is OK");
+    }
+
+    @Test
+    void createOrderAndCheckResponse() {
+        Response response = createOrder(getAuthenticatedRequestSpecification(), OrderDto.createRandomOrder());
+
+        Assertions.assertAll("Order creation",
                 () -> Assertions.assertEquals(HttpStatus.SC_OK, response.getStatusCode(), "Status code is OK"),
-                () -> Assertions.assertNotNull(response.getBody().path("id"), "Order ID is not null"),
-                () -> Assertions.assertNull(response.getBody().path("courierID"), "Courier ID is null")
+                () -> Assertions.assertEquals("OPEN", response.path("status"), "New order status is OPEN"),
+                () -> Assertions.assertNotEquals(0, (int) response.path("id"), "New order ID not equal 0")
         );
     }
+
     @Test
-            void deleteOrderById() {
-        Response responseOrderCreation = ApiClient.createRandomOrder(getAuthenticatedRequestSpecification());
-        int orderId = response.getBody().path("id");
+    void deleteOrderByIdAndCheckResponse() {
+        Response responseOrderCreation = createOrder(getAuthenticatedRequestSpecification(), OrderDto.createRandomOrder());
+        int orderId = responseOrderCreation.getBody().path("id");
+
         Response responseOrderDeletion = ApiClient.deleteOrderById(getAuthenticatedRequestSpecification(), orderId);
+
+        Assertions.assertAll("Order deletion",
+                () -> Assertions.assertEquals(HttpStatus.SC_OK, responseOrderDeletion.getStatusCode(), "Order deletion status code is OK"),
+                () -> Assertions.assertEquals("true", responseOrderDeletion.getBody().asString(), "Order deletion response body is true")
+        );
     }
+
 }

@@ -11,27 +11,28 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
 
 public class ApiClient extends BaseSetupApi {
-    public static Response getOrders(RequestSpecification spec){
+    public static Response getOrders(RequestSpecification spec) {
 
         return given()
                 .spec(spec)
                 .log()
                 .all()
-                .get( "orders")
+                .get("orders")
                 .then()
                 .log()
                 .all()
                 .extract()
                 .response();
     }
-    public static Response createOrder(RequestSpecification spec, OrderDto orderDto){
+
+    public static Response createOrder(RequestSpecification spec, OrderDto orderDto) {
 
         return given()
                 .spec(spec)
                 .log()
                 .all()
                 .body(orderDto)
-                .post( "orders")
+                .post("orders")
                 .then()
                 .log()
                 .all()
@@ -39,15 +40,15 @@ public class ApiClient extends BaseSetupApi {
                 .response();
     }
 
-    public static String authorizeAndGetToken(String username, String password){
+    public static String authorizeAndGetToken(String username, String password) {
 
-        LoginDto loginDto=new LoginDto(username,password);
+        LoginDto loginDto = new LoginDto(username, password);
         String token = given()
                 .log()
                 .all()
                 .contentType(ContentType.JSON)
-                .body( new Gson().toJson( loginDto ) )
-                .post("login/student" )
+                .body(new Gson().toJson(loginDto))
+                .post("login/student")
                 .then()
                 .log()
                 .all()
@@ -58,14 +59,14 @@ public class ApiClient extends BaseSetupApi {
         return token;
     }
 
-    public static Response deleteOrderById(RequestSpecification spec, int orderId){
+    public static Response deleteOrderById(RequestSpecification spec, int orderId) {
 
         return given()
                 .spec(spec)
                 .log()
                 .all()
                 .contentType(ContentType.JSON)
-                .delete( "orders/" + orderId)
+                .delete("orders/" + orderId)
                 .then()
                 .log()
                 .all()
