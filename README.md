@@ -20,7 +20,6 @@ mvn clean test -Dtest=TestClassName
 
 ### **Homework 17:**
 ### Tallinn delivery login checklist
-
 | № | Check name                             | Status |
 |---|----------------------------------------|--------|
 | 1 | Successful login with valid data       |        |
@@ -31,8 +30,8 @@ mvn clean test -Dtest=TestClassName
 | 5 | EN Language switch check               |        |
 
 
-### Tallinn delivery login checklist
-| № | Element name        | Xpath                            |
+### List of needed Web elements with their XPath
+| № | Element name        | XPath                            |
 |---|---------------------|----------------------------------|
 | 1 | Login text field    | //*[@data-name="username-input"] |
 | 2 | Password text field | //*[@data-name="password-input"] |
@@ -40,3 +39,9 @@ mvn clean test -Dtest=TestClassName
 | 4 | RU language switch  | //button[text()='RU']            |
 | 4 | EN language switch  | //button[text()='EN']            |
 
+### Additional task for [HTML document](https://drive.google.com/file/d/15Zlqvx4sW5WhWymnXEa0eu3o7N7aDY1e/view)
+| № | Exercise name                                                        | Xpath                                 |
+|---|----------------------------------------------------------------------|---------------------------------------|
+| 1 | Select all td elements that contain "Name"                           | //td[contains(., 'Name')]             |
+| 1 | Select all tr elements whose data-qa attribute starts with "amount-" | //tr[starts-with(@data-qa, 'amount-'] |
+| 2 | Select all tr elements with td element including text "John Doe"     | //tr/td//*[text()="John Doe"]         |
